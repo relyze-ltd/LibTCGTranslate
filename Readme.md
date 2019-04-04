@@ -21,7 +21,7 @@ Open the `.\build\msvc\TCGTranslate.sln` solution in Visual Studio 2017 and Buil
 Test Usage
 ----------
 
-After you build the solution you can examine translation using the TestLibTCGTranslate application. For example, the ARM instruction `str r2, [stack_0x0]!` is encoded as `04202DE5` and can be translated as follows:
+After you build the solution you can examine translation using the TestLibTCGTranslate application. For example, the ARM instruction `str r2, [sp, #-0x4]!` is encoded as `04202DE5` and can be translated as follows:
 
 ```
 >TestLibTCGTranslate.exe /arm /buffer 04202DE5 /max_insns 1
