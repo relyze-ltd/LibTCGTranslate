@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\lib">
+      <UniqueIdentifier>{6a0c1608-0f90-406e-b9d4-f3a60360d760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\target">
+      <UniqueIdentifier>{daad1ad8-65d0-4c8e-a7ce-6835a311c8de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\target\arm">
+      <UniqueIdentifier>{2c80095d-c3cf-4af3-b001-2faef69fe39c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\tcg">
+      <UniqueIdentifier>{1d314a9a-54d3-48c7-9e25-c238268f96f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib">
+      <UniqueIdentifier>{3abb2dbb-b065-412f-9bca-cd8f6768d493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\target">
+      <UniqueIdentifier>{f5e99664-bd9f-4782-b622-4f8684bbdb23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\target\arm">
+      <UniqueIdentifier>{4c1ad7a9-eb2d-4e23-a241-4d4be2f34aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\tcg">
+      <UniqueIdentifier>{dca93a05-3652-4e7b-932d-5c6240e780ea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\LibTCGTranslate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lib\target\host-utils.c">
+      <Filter>Source Files\lib\target</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lib\tcg\optimize.c">
+      <Filter>Source Files\lib\tcg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lib\tcg\tcg.c">
+      <Filter>Source Files\lib\tcg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lib\tcg\tcg-common.c">
+      <Filter>Source Files\lib\tcg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lib\tcg\tcg-op.c">
+      <Filter>Source Files\lib\tcg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lib\target\arm\translate-a64.c">
+      <Filter>Source Files\lib\target\arm</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\lib\target\arm\cpu.h">
+      <Filter>Header Files\lib\target\arm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\target\arm\helpers-arm.h">
+      <Filter>Header Files\lib\target\arm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\target\arm\translate.h">
+      <Filter>Header Files\lib\target\arm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\target\host-utils.h">
+      <Filter>Header Files\lib\target</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\helper-gen.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\helper-head.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\helper-proto.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\helpers.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\helpers-index.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\helper-tcg.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\tcg.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\tcg-common.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\tcg-op.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\tcg-opc.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\tcg\tcg-target.h">
+      <Filter>Header Files\lib\tcg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\bitmap.h">
+      <Filter>Header Files\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\bitops.h">
+      <Filter>Header Files\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\internal.h">
+      <Filter>Header Files\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\LibTCGTranslate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\lib\target\arm\helper-a64.h">
+      <Filter>Header Files\lib\target\arm</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
