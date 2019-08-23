@@ -85,9 +85,20 @@ void get_buffer(const char * input, uint8_t ** buffer)
 	free(opcd);
 }
 
+int usage(const char * msg)
+{
+	if (msg)
+		printf("[-] %s\n", msg);
+	
+	printf("Usage: TestLibTCGTranslate.exe [/pseudo] [/opt] [/dce] [/thumb] [/pc 0x10000] [/max_insns 4] [/x86|/x64|/arm|/aarch64] /buffer 90909090");
+	
+	return -1;
+}
+
 int main(int argc, char * argv[])
 {
-	bool optimize = false;
+	bool optimize_opt = false;
+	bool optimize_dce = false;
 	bool thumb = false;
 	bool pseudo = false;
 	uint16_t max_insns = 0;
@@ -106,7 +117,9 @@ int main(int argc, char * argv[])
 		else if (_strcmpi(argv[i], "/pseudo") == 0)
 			pseudo = true;
 		else if (_strcmpi(argv[i], "/opt") == 0 || _strcmpi(argv[i], "/optimize") == 0)
-			optimize = true;
+			optimize_opt = true;
+		else if (_strcmpi(argv[i], "/dce") == 0)
+			optimize_dce = true;
 		else if (_strcmpi(argv[i], "/thumb") == 0)
 			thumb = true;
 		else if (_strcmpi(argv[i], "/buffer") == 0)
@@ -119,14 +132,12 @@ int main(int argc, char * argv[])
 
 	if (arch == TCGArch::TCG_ARCH_UNKNOWN)
 	{
-		printf("[-] Must select an arch (/x86, /x64, /arm, /aarch64).\n");
-		return -1;
+		return usage("Must select an arch (/x86, /x64, /arm, /aarch64).");
 	}
 
 	if (test_code == nullptr)
 	{
-		printf("[-] Must provide a buffer (/buffer).\n");
-		return -1;
+		return usage("Must provide a buffer (/buffer).");
 	}
 
 	LibTCGTInstance * inst = new LibTCGTInstance(arch, &read_callback, nullptr);
@@ -144,8 +155,8 @@ int main(int argc, char * argv[])
 		return -1;
 	}
 
-	if (optimize)
-		inst->optimize();
+	if (optimize_opt || optimize_dce)
+		inst->optimize(optimize_opt, optimize_dce);
 
 	unsigned oi = inst->first_op();
 
