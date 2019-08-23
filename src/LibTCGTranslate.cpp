@@ -521,22 +521,25 @@ uint16_t LIBTCGT_API LibTCGT_translate(LibTCGTContext * ctx, uint64_t pc, uint16
 	return ctx->tb.icount;
 }
 
-void LIBTCGT_API LibTCGT_optimize(LibTCGTContext * ctx)
+void LIBTCGT_API LibTCGT_optimize(LibTCGTContext * ctx, bool opt, bool dce)
 {
 	if (ctx == nullptr)
 		return;
 
-	tcg_optimize(&ctx->s);
+	if(opt)
+		tcg_optimize(&ctx->s);
 
-	uint8_t * temp_state = (uint8_t *)tcg_malloc(&ctx->s, ctx->s.nb_temps + ctx->s.nb_indirects);
-	if (temp_state == nullptr)
-		return;
+	if (dce) {
+		uint8_t * temp_state = (uint8_t *)tcg_malloc(&ctx->s, ctx->s.nb_temps + ctx->s.nb_indirects);
+		if (temp_state == nullptr)
+			return;
 
-	liveness_pass_1(&ctx->s, temp_state);
+		liveness_pass_1(&ctx->s, temp_state);
 
-	if (ctx->s.nb_indirects > 0) {
-		if (liveness_pass_2(&ctx->s, temp_state))
-			liveness_pass_1(&ctx->s, temp_state);
+		if (ctx->s.nb_indirects > 0) {
+			if (liveness_pass_2(&ctx->s, temp_state))
+				liveness_pass_1(&ctx->s, temp_state);
+		}
 	}
 }
 

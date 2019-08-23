@@ -372,7 +372,7 @@ typedef void (LIBTCGT_API * LIBTCGT_REINIT)(LibTCGTContext * ctx, LibTCGTReadCal
 typedef void (LIBTCGT_API * LIBTCGT_RESET)(LibTCGTContext * ctx);
 typedef void (LIBTCGT_API * LIBTCGT_CLEANUP)(LibTCGTContext * ctx);
 typedef uint16_t(LIBTCGT_API * LIBTCGT_TRANSLATE)(LibTCGTContext * ctx, uint64_t pc, uint16_t max_insns);
-typedef void (LIBTCGT_API * LIBTCGT_OPTIMIZE)(LibTCGTContext * ctx);
+typedef void (LIBTCGT_API * LIBTCGT_OPTIMIZE)(LibTCGTContext * ctx, bool opt, bool dce);
 typedef unsigned (LIBTCGT_API * LIBTCGT_FIRST_OP)(LibTCGTContext * ctx);
 typedef unsigned (LIBTCGT_API * LIBTCGT_LAST_OP)(LibTCGTContext * ctx);
 typedef unsigned (LIBTCGT_API * LIBTCGT_NEXT_OP)(LibTCGTContext * ctx, unsigned oi);
@@ -752,12 +752,12 @@ public:
 		return this->LibTCGT_translate(this->ctx, pc, max_insns);
 	}
 
-	void LIBTCGT_API optimize(void)
+	void LIBTCGT_API optimize(bool opt = true, bool dce = true)
 	{
 		if (this->LibTCGT_optimize == nullptr)
 			return;
 
-		this->LibTCGT_optimize(this->ctx);
+		this->LibTCGT_optimize(this->ctx, opt, dce);
 	}
 
 	unsigned LIBTCGT_API first_op(void)
@@ -1045,7 +1045,7 @@ extern "C"
 
 	LIBTCGT_API_EXPORT uint16_t LIBTCGT_API LibTCGT_translate(LibTCGTContext * ctx, uint64_t pc, uint16_t max_insns);
 
-	LIBTCGT_API_EXPORT void LIBTCGT_API LibTCGT_optimize(LibTCGTContext * ctx);
+	LIBTCGT_API_EXPORT void LIBTCGT_API LibTCGT_optimize(LibTCGTContext * ctx, bool opt, bool dce);
 
 	LIBTCGT_API_EXPORT unsigned LIBTCGT_API LibTCGT_first_op(LibTCGTContext * ctx);
 
