@@ -5221,15 +5221,19 @@ reswitch:
 				gen_lea_modrm(s, env, dc, modrm);
 				opreg = OR_TMP0;
 			}
-			else if (op == OP_XORL && rm == reg) {
-			xor_zero:
-				/* xor reg, reg optimisation */
-				set_cc_op(s, dc, CC_OP_CLR);
-				tcg_gen_movi_tl(s, s->cpu_T0, 0);
-				gen_op_mov_reg_v(s, ot, reg, s->cpu_T0);
-				break;
-			}
-			else {
+			else 
+			{
+				if (rm == reg) {
+					if (op == OP_XORL || op == OP_SUBL) {
+					xor_sub_zero:
+						// 'sub reg, reg' -> 'mov reg, 0' optimisation
+						// 'xor reg, reg' -> 'mov reg, 0' optimisation
+						set_cc_op(s, dc, CC_OP_CLR);
+						tcg_gen_movi_tl(s, s->cpu_T0, 0);
+						gen_op_mov_reg_v(s, ot, reg, s->cpu_T0);
+						break;
+					}
+				}
 				opreg = rm;
 			}
 			gen_op_mov_v_reg(s, ot, s->cpu_T1, reg);
@@ -5244,10 +5248,11 @@ reswitch:
 				gen_lea_modrm(s, env, dc, modrm);
 				gen_op_ld_v(s, dc, ot, s->cpu_T1, s->cpu_A0);
 			}
-			else if (op == OP_XORL && rm == reg) {
-				goto xor_zero;
-			}
 			else {
+				if (rm == reg) {
+					if(op == OP_XORL || op == OP_SUBL)
+						goto xor_sub_zero;
+				}
 				gen_op_mov_v_reg(s, ot, s->cpu_T1, rm);
 			}
 			gen_op(s, dc, op, ot, reg);
@@ -5300,6 +5305,34 @@ reswitch:
 			val = (int8_t)insn_get(s, env, dc, MO_8);
 			break;
 		}
+
+		if (opreg != OR_TMP0 && !(dc->prefix & PREFIX_LOCK))
+		{
+			if (val == -1)
+			{
+				if (op == OP_ORL)
+				{
+					// 'or reg, -1' -> 'mov reg, -1' optimisation
+					tcg_gen_movi_tl(s, s->cpu_T0, val);
+					gen_op_st_rm_T0_A0(s, dc, ot, opreg);
+					gen_op_update1_cc(s);
+					set_cc_op(s, dc, (CCOp)(CC_OP_LOGICB + ot));
+					break;
+				}
+			}
+			else if (val == 0)
+			{
+				if (op == OP_ANDL)
+				{
+					// 'and reg, 0' -> 'mov reg, 0' optimisation
+					set_cc_op(s, dc, CC_OP_CLR);
+					tcg_gen_movi_tl(s, s->cpu_T0, 0);
+					gen_op_mov_reg_v(s, ot, opreg, s->cpu_T0);
+					break;
+				}
+			}
+		}
+
 		tcg_gen_movi_tl(s, s->cpu_T1, val);
 		gen_op(s, dc, op, ot, opreg);
 	}
