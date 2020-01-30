@@ -31,6 +31,13 @@ static const char *regnames[] = {
     "x24", "x25", "x26", "x27", "x28", "fp", "lr", "sp"
 };
 
+static const char *vregnames[] = {
+	"v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7",
+	"v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15",
+	"v16", "v17", "v18", "v19", "v20", "v21", "v22", "v23",
+	"v24", "v25", "v26", "v27", "v28", "v29", "v30", "v31"
+};
+
 enum a64_shift_type {
     A64_SHIFT_TYPE_LSL = 0,
     A64_SHIFT_TYPE_LSR = 1,
@@ -90,6 +97,11 @@ void a64_translate_init(TCGContext * s)
     }
 
 	s->cpu_exclusive_high = tcg_global_mem_new_i64(s, s->cpu_env, offsetof(CPUARMState, exclusive_high), "exclusive_high");
+
+	for (i = 0; i < 32; ++i) {
+		// XXX: we need to model these as 128-bit registers, not 64-bit registers.
+		s->cpu_V[i] = tcg_global_mem_new_i64(s, s->cpu_env, offsetof(CPUARMState, vfp.regs[i*2]), vregnames[i]);
+	}
 }
 
 #define get_mem_index(dc) arm_to_core_mmu_idx((dc)->mmu_idx)

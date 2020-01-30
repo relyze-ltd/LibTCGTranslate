@@ -573,6 +573,7 @@ struct TCGContext {
 	TCGv_i64 cpu_X[32];
 	TCGv_i64 cpu_pc;
 	TCGv_i64 cpu_exclusive_high;
+	TCGv_i64 cpu_V[32];
 #endif
 
 #if defined(TARGET_X86) || defined(TARGET_X86_64)
