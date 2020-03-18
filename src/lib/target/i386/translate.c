@@ -9134,6 +9134,14 @@ void i386_translate_init(TCGContext * s)
 		"bnd0_ub", "bnd1_ub", "bnd2_ub", "bnd3_ub"
 	};
 
+	static const char cr_names[5][4] = {
+		"cr0", "cr1", "cr2", "cr3", "cr4"
+	};
+
+	static const char dr_names[8][5] = {
+		"dr0", "dr1",  "dr2",  "dr3",  "dr4",  "dr5",  "dr6",  "dr7", 
+	};
+
 	int i;
 
 	s->cpu_env = tcg_global_reg_new_ptr(s, TCG_AREG0, "env");
@@ -9171,6 +9179,16 @@ void i386_translate_init(TCGContext * s)
 	for (i = 0; i < 4; ++i) {
 		s->cpu_bndl[i] = tcg_global_mem_new_i64(s, s->cpu_env, offsetof(CPUX86State, bnd_regs[i].lb), bnd_regl_names[i]);
 		s->cpu_bndu[i] = tcg_global_mem_new_i64(s, s->cpu_env, offsetof(CPUX86State, bnd_regs[i].ub), bnd_regu_names[i]);
+	}
+
+	for (i = 0; i < 5; ++i) {
+		s->cpu_cr_regs[i] = tcg_global_mem_new(s, s->cpu_env, offsetof(CPUX86State, cr[i]), cr_names[i]);
+	}
+
+	s->cpu_xcr0_reg = tcg_global_mem_new(s, s->cpu_env, offsetof(CPUX86State, xcr0), "xcr0");
+
+	for (i = 0; i < 8; ++i) {
+		s->cpu_dr_regs[i] = tcg_global_mem_new(s, s->cpu_env, offsetof(CPUX86State, dr[i]), dr_names[i]);
 	}
 
 	s->cpu_eflags_c = tcg_global_mem_new(s, s->cpu_env, offsetof(CPUX86State, cf), "CF");

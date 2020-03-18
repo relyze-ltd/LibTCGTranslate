@@ -597,6 +597,9 @@ struct TCGContext {
 	TCGv cpu_seg_base[6];
 	TCGv_i64 cpu_bndl[4];
 	TCGv_i64 cpu_bndu[4];
+	TCGv cpu_cr_regs[5];
+	TCGv cpu_xcr0_reg;
+	TCGv cpu_dr_regs[16];
 	TCGv cpu_eflags_c;
 	TCGv cpu_eflags_p;
 	TCGv cpu_eflags_a;
