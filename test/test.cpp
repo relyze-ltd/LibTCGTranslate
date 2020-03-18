@@ -379,6 +379,65 @@ int main(int argc, char * argv[])
 			}
 			break;
 		}
+		case INDEX_op_muluh_i32:
+		case INDEX_op_mulsh_i32:
+		case INDEX_op_muluh_i64:
+		case INDEX_op_mulsh_i64:
+		{
+			if (pseudo)
+			{
+				const char * castA = nullptr;
+				const char * castB = nullptr;
+				int rshift = 0;
+
+				switch (opc)
+				{
+				case INDEX_op_muluh_i32:
+					castA = "uint32_t";
+					castB = "uint64_t";
+					rshift = 32;
+					break;
+				case INDEX_op_mulsh_i32:
+					castA = "int32_t";
+					castB = "int64_t";
+					rshift = 32;
+					break;
+				case INDEX_op_muluh_i64:
+					castA = "uint64_t";
+					castB = "uint128_t";
+					rshift = 64;
+					break;
+				case INDEX_op_mulsh_i64:
+					castA = "int64_t";
+					castB = "int128_t";
+					rshift = 64;
+					break;
+				default:
+					break;
+				}
+
+				printf(
+					"%s = ((%s)(%s)%s * (%s)%s) >> %d;",
+					inst->get_name_register(inst->get_TCGArg(oi, 0)),
+					castB,
+					castA,
+					inst->get_name_register(inst->get_TCGArg(oi, 1)),
+					castA,
+					inst->get_name_register(inst->get_TCGArg(oi, 2)),
+					rshift
+				);
+			}
+			else
+			{
+				printf(
+					"%s, %s, %s",
+					inst->get_name_register(inst->get_TCGArg(oi, 0)),
+					inst->get_name_register(inst->get_TCGArg(oi, 1)),
+					inst->get_name_register(inst->get_TCGArg(oi, 2))
+				);
+			}
+			break;
+		}
 		case INDEX_op_ext_i32_i64:
 		case INDEX_op_extu_i32_i64:
 		case INDEX_op_ext8s_i32:

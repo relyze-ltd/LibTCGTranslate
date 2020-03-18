@@ -53,12 +53,12 @@ typedef enum TCGReg {
 #define TCG_TARGET_HAS_movcond_i64		1
 #define TCG_TARGET_HAS_muls2_i32		0
 #define TCG_TARGET_HAS_muls2_i64		0
-#define TCG_TARGET_HAS_mulsh_i32		0
-#define TCG_TARGET_HAS_mulsh_i64		0
+#define TCG_TARGET_HAS_mulsh_i32		1
+#define TCG_TARGET_HAS_mulsh_i64		1
 #define TCG_TARGET_HAS_mulu2_i32		0
 #define TCG_TARGET_HAS_mulu2_i64		0
-#define TCG_TARGET_HAS_muluh_i32		0
-#define TCG_TARGET_HAS_muluh_i64		0
+#define TCG_TARGET_HAS_muluh_i32		1
+#define TCG_TARGET_HAS_muluh_i64		1
 #define TCG_TARGET_HAS_nand_i32			0
 #define TCG_TARGET_HAS_nand_i64			0
 #define TCG_TARGET_HAS_neg_i32			1
