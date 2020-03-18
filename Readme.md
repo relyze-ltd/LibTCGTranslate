@@ -9,7 +9,7 @@ Features
  * Supports ARM (including Thumb and Thumb2), AArch64, x86 and x64 translators.
  * C API exposed.
  * C++ Wrapper.
- * Thread Safe (per LibTCGTContext).
+ * Thread Safe (per LibTCGContext).
  * MSVC 2017 build solution.
  * Explicit condition code eflags access for the x86 and x64 translators.
  
