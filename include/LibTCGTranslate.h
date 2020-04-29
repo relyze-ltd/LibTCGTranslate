@@ -476,6 +476,8 @@ typedef TCGOpFlags(LIBTCGT_API * LIBTCGT_GET_FLAGS_OPC)(LibTCGTContext * ctx, TC
 class LibTCGTInstance
 {
 protected:
+	LibTCGTReadCallback read_callback;
+    void * user_ptr;
 	LibTCGTContext * ctx;
 	HMODULE h;
 
@@ -516,6 +518,8 @@ protected:
 
 	void LIBTCGT_API _reset(void)
 	{
+		this->read_callback = nullptr;
+		this->user_ptr = nullptr;
 		this->ctx = nullptr;
 		this->h = nullptr;
 		this->LibTCGT_arch = nullptr;
@@ -743,6 +747,9 @@ public:
 			if (this->ctx == nullptr)
 				break;
 
+			this->read_callback = read_callback;
+			this->user_ptr = user_ptr;
+
 		} while (0);
 	}
 
@@ -799,6 +806,9 @@ public:
 			return;
 
 		this->LibTCGT_reinit(this->ctx, read_callback, user_ptr);
+
+		this->read_callback = read_callback;
+		this->user_ptr = user_ptr;
 	}
 
 	void LIBTCGT_API reset(void)
@@ -1078,6 +1088,15 @@ public:
 	{
 		return (uint64_t)this->get_arg(oi, ai);
 	}
+
+	size_t LIBTCGT_API read(uint64_t addr, uint8_t * buffer, size_t size)
+	{
+		if( this->read_callback == nullptr )
+			return 0;
+
+		return this->read_callback(this->user_ptr, addr, buffer, size);
+	}
+
 };
 
 #endif // #if defined(__cplusplus)
