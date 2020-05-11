@@ -477,7 +477,7 @@ class LibTCGTInstance
 {
 protected:
 	LibTCGTReadCallback read_callback;
-    void * user_ptr;
+	void * user_ptr;
 	LibTCGTContext * ctx;
 	HMODULE h;
 
@@ -584,8 +584,6 @@ public:
 				break;
 			}
 		}
-
-		bool success = false;
 
 		do
 		{
